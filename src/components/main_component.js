@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
-import {Nav, NavItem} from 'react-bootstrap';
-
-
+import {List, ListItem} from 'material-ui/List';
+import AppBar from 'material-ui/AppBar';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <h1>Welcome</h1>
-          <Link to="/">Home</Link>
-          <Link to="/search">Search Movies</Link>
-          <Link to="/list">Movies List</Link>
+        <AppBar title="Welcome"/>
+        <List>
+          <Link to="/"><ListItem primaryText={'Home'}/></Link>
+          <Link to="/search"><ListItem primaryText={'Search Movies'}/></Link>
+          <Link to="/list"><ListItem primaryText={'Movies List'}/></Link>
+        </List>
       </div>
     );
   }
 }
+
 
 export default App;
