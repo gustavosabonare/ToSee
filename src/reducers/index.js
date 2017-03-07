@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import MovieReducer from './reducer_movies';
 import ListReducer from './reducer_list';
+import SearchReducer from './reducer_search';
 
 const allReducers = combineReducers({
-  movies: MovieReducer,
-  list: ListReducer
+  list: ListReducer,
+  search: SearchReducer
 });
 
 export default allReducers
