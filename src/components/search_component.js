@@ -9,15 +9,34 @@ import RaisedButton from 'material-ui/RaisedButton';
 const style = {
   margin: 12,
 }
+
+
+
 class SearchPage extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      moviesList: []
+    }
+  }
+
+  componentWillMount(){
+    fetch ('http://www.omdbapi.com/?s=Star+Wars').then((response) => response.json())}
 
   render(){
     return(
       <div>
-      <AppBar title="Search Movies"/>
-      <TextField hintText="Movie Name"/>
-      <RaisedButton label="Pesquisar" primary={true} style={style}/>
-      <Link to="/"><RaisedButton label="Back" default={true} style={style}/></Link>
+        <div>
+          <AppBar title="Search Movies"/>
+
+        </div>
+
+        <div style={{textAlign: 'center'}}>
+          <TextField hintText="Movie Name"/>
+          <RaisedButton label="Search" primary={true} style={style}/>
+          <Link to="/"><RaisedButton label="Back" default={true} style={style}/></Link>
+        </div>
       </div>
     )
   }

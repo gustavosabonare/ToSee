@@ -14,8 +14,12 @@ class MoviesList extends Component {
   render(){
     return(
       <div>
-      <AppBar title="Movies To See"/>
-      <Link to="/"><RaisedButton label="Back" default={true} style={style}/></Link>
+        <div>
+          <AppBar title="Movies To See"/>
+        </div>
+        <div  style={{textAlign: 'center'}}>
+          <Link to="/"><RaisedButton label="Back" default={true} style={style}/></Link>
+        </div>
       </div>
     )
   }

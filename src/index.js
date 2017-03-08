@@ -8,6 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import Routes from './routes/routes.js';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 injectTapEventPlugin();
 
@@ -16,9 +17,14 @@ const store = createStore(allReducers,
     applyMiddleware(thunk)
   ));
 
+const muiTheme = getMuiTheme({
+  listItem:{
+    height: 10000,
+  },
+})
 
 ReactDOM.render(
-  <MuiThemeProvider>
+  <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <Routes />
     </Provider>
