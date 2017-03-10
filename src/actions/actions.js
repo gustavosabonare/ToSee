@@ -15,3 +15,10 @@ export function searchFetch(title, page){
     )
   }
 }
+
+export function resetComponent(){
+  return dispatch => dispatch({
+    type: types.RESET_COMPONENT,
+    payload: {list: {}}
+  })
+}

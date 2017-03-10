@@ -4,12 +4,12 @@ import * as types from '../types/types';
 const initialState = {}
 
 const app = (state = initialState, action) => reducerMatching(
-  [types.FETCH_MOVIES, fetchMovies],
+  [types.RESET_COMPONENT, resetComponent],
   [types.SEARCH_FETCH, searchFetch],
 )(state,action)
 
-function fetchMovies(state){
-  return {...state }
+function resetComponent(state, action){
+  return {...state, list: undefined }
 }
 
 function searchFetch(state, action){
