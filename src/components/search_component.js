@@ -31,8 +31,7 @@ const style = {
 class SearchPage extends Component {
 
   displayingFetched (){
-    return this.props.listMovies.list !== undefined ?
-      this.props.listMovies.list.Search
+    return this.props.listMovies.list !== undefined ? this.props.listMovies.list.Search
     .map(movie =>
       <GridTile key={ movie.imdbID} title={movie.Title } actionIcon={<IconButton><StarBorder color="rgb(0, 188, 212)" /></IconButton>} >
         { movie.Poster !== 'N/A' ? <img alt={movie.imdbID} src={movie.Poster}/> : <img alt={movie.imdbID} src='http://www.grescid.com/wp-content/uploads/2016/09/image-not-found.jpg'/> }
@@ -50,11 +49,12 @@ class SearchPage extends Component {
           <GridList style={style.gridList} cols={2.2}>
             {this.displayingFetched()}
           </GridList>
-           </div>
-
+        </div>
         <div style={{textAlign: 'center'}}>
+          <div ref='pageButtons'>
+          </div>
           <TextField ref='searchText' hintText="Movie Name"/>
-          <RaisedButton label="Search" primary={true} style={style} onClick={() => this.props.searchFetch(this.refs.searchText.getValue())}/>
+          <RaisedButton label="Search" primary={true} style={style} onClick={() => {this.props.searchFetch(this.refs.searchText.getValue());}}/>
           <Link to="/"><RaisedButton label="Back" default={true} style={style}/></Link>
         </div>
       </div>

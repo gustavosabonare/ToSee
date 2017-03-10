@@ -1,8 +1,10 @@
 import * as types from '../types/types'
 
-export function searchFetch(title){
+export function searchFetch(title, page){
+  const url = 'http://www.omdbapi.com/?s=';
+
   return dispatch => {
-    fetch('http://www.omdbapi.com/?s=' + title )
+    fetch(page !== '' ? url + title + '&page=' + page : url + title)
     .then(response=> response.json())
     .then(response => {
       dispatch({
