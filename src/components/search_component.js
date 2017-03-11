@@ -9,6 +9,8 @@ import * as actions from '../actions/actions'
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import {Step, Stepper, StepLabel } from 'material-ui/Stepper';
+import {Card, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 const style = {
   margin: 12,
@@ -17,30 +19,38 @@ const style = {
     flexWrap: 'wrap',
     justifyContent: 'space-around',
   },
-  gridList: {
-    margin: 0,
+  card:{
     padding: 10,
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflowX: 'auto',
+    margin:'auto'
   },
-  titleStyle: {
-    padding: 0,
-    width: 210,
-    color: 'rgb(0, 188, 212)',
-  },
+  cardHeader:{
+    color: '#ef6c00'
+  }
 }
 
 class SearchPage extends Component {
 
-  displayingFetched (){
+  displayingFetchedMovies (){
     return this.props.listMovies.list !== undefined ? this.props.listMovies.list
     .map(movie =>
-      <GridTile style={style.titleStyle} key={ movie.imdbID} title={movie.Title } actionIcon={<IconButton><StarBorder color="rgb(0, 188, 212)" /></IconButton>} >
-        { movie.Poster !== 'N/A' ? <img alt={movie.imdbID} src={movie.Poster}/> : <img alt={movie.imdbID} src='http://www.grescid.com/wp-content/uploads/2016/09/image-not-found.jpg'/> }
-      </GridTile> )
+        <Card  expanded={false} key={movie.imdbID} style={style.card}>
+          <CardHeader titleStyle={style.cardHeader} actAsExpander={true} showExpandableButton={true} title={movie.Title + " (" + movie.Year + ")"}></CardHeader>
+        </Card>)
     : null
   }
+
+  displayingPages(){
+    if (this.props.listMovies.list !== undefined){
+      var stepComponents = [];
+       for (var i=0; i<this.props.listMovies.pages; i++ )
+       {
+        stepComponents.push(<Step key={i}>
+          <StepLabel></StepLabel>
+        </Step>)
+       }
+     return stepComponents;
+  }
+}
 
   buttonConfigNext(){
     if(this.props.listMovies.pages !== undefined)
@@ -49,7 +59,6 @@ class SearchPage extends Component {
           return true
         else
           return false
-
     }
     else
       return true
@@ -67,25 +76,25 @@ class SearchPage extends Component {
       return true
   }
 
+  expandingMovie(){
+
+  }
   render(){
     return(
-
       <div>
         {console.log(this.props)}
         <div>
           <AppBar title="Search Movies"/>
         </div>
         <div>
-          <GridList ref='gridList' style={style.gridList} cols={2.2} >
-            {this.displayingFetched()}
-          </GridList>
+            {this.displayingFetchedMovies()}
         </div>
         <div style={{textAlign: 'center'}}>
-          <div ref='pageButtons'>
-            <RaisedButton label="<<" disabled={this.buttonConfigPrevious()}  onClick={() => this.props.searchFetch(this.refs.searchText.getValue(),this.props.listMovies.indexPage-1)} primary={true} style={style} />
-            <RaisedButton label=">>" disabled={this.buttonConfigNext()} onClick={() => this.props.searchFetch(this.refs.searchText.getValue(),this.props.listMovies.indexPage+1)} primary={true} style={style} />
+          <div>
+            <RaisedButton label="<" disabled={this.buttonConfigPrevious()}  onClick={() => this.props.searchFetch(this.refs.searchText.getValue(),this.props.listMovies.indexPage-1)} primary={true} style={style} />
+            <RaisedButton label=">" disabled={this.buttonConfigNext()} onClick={() => this.props.searchFetch(this.refs.searchText.getValue(),this.props.listMovies.indexPage+1)} primary={true} style={style} />
           </div>
-          <TextField ref='searchText' hintText="Movie Name"/>
+          <TextField floatingLabelText="Movie Name" ref='searchText' hintText="Movie Name"/>
           <RaisedButton label="Search" primary={true} style={style}
             onClick={() => this.props.searchFetch(this.refs.searchText.getValue())}/>
           <Link to="/" ><RaisedButton onClick={() => this.props.resetComponent()} label="Back" default={true} style={style}/></Link>
