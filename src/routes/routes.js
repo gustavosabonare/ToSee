@@ -6,8 +6,8 @@ import movies_list_component from '../components/movies_list_component'
 
 export default () => (
   <Router history={browserHistory}>
-    <Route path="/" component={main_component} />
-    <Route path="/search" component={search_component} />
-    <Route path="/list" component={movies_list_component} />
+    <Route path="https://tooseelist.herokuapp.com/" component={main_component} />
+    <Route path="https://tooseelist.herokuapp.com//search" component={search_component} />
+    <Route path="https://tooseelist.herokuapp.com//list" component={movies_list_component} />
   </Router>
 );
