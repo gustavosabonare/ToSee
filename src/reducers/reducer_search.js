@@ -13,7 +13,7 @@ function resetComponent(state, action){
 }
 
 function searchFetch(state, action){
-  return {...state, list: action.lista, indexPage: action.indexPage === undefined ? 1 : action.indexPage , pages: Math.round(action.totalResults / 10)}
+  return {...state, list: action.lista, indexPage: action.indexPage === undefined ? 1 : action.indexPage , pages: action.pages}
 }
 
 
