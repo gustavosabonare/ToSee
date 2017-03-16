@@ -49,7 +49,7 @@ class SearchPage extends Component {
           key={movie.id}
           style={style.card}>
           <CardHeader
-            avatar={movie.poster_path !== null ? 'https://image.tmdb.org/t/p/w300'+ movie.poster_path : "http://www.auro-3d.com/wp-content/uploads/2016/08/no-poster-available.jpg"}
+            avatar={movie.poster_path !== null ? 'https://image.tmdb.org/t/p/w92'+ movie.poster_path : "http://www.auro-3d.com/wp-content/uploads/2016/08/no-poster-available.jpg"}
             titleStyle={style.cardHeader}
             showExpandableButton={true}
             title={movie.original_title}
@@ -70,7 +70,7 @@ class SearchPage extends Component {
                 {movie.overview}
               </CardText>}>
             <img role="presentation" src={movie.poster_path !== null ?
-              'https://image.tmdb.org/t/p/w600'+ movie.poster_path :
+              'https://image.tmdb.org/t/p/w780'+ movie.poster_path :
               "http://www.auro-3d.com/wp-content/uploads/2016/08/no-poster-available.jpg"}/>
           </CardMedia>
         </Card>)
@@ -101,9 +101,6 @@ class SearchPage extends Component {
       return true
   }
 
-  expandingMovie(){
-
-  }
   render(){
     return(
       <div>

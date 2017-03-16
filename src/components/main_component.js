@@ -22,13 +22,20 @@ class App extends Component {
             docked={false}
             open={this.state.open}
             onRequestChange={(open) => this.setState({open})}>
-            <Link to='/search'><MenuItem onTouchTap={() => this.setState({ open: false })}>
+            <Link
+              to='/search'>
+              <MenuItem
+                onTouchTap={() => this.setState({ open: false })}>
               Search Movies
-            </MenuItem></Link>
-            <Link to='/list' ><MenuItem
-              onTouchTap={() =>this.setState({ open: false })}>
-              Movies List
-            </MenuItem></Link>
+              </MenuItem>
+            </Link>
+            <Link
+              to='/list' >
+                <MenuItem
+                  onTouchTap={() =>this.setState({ open: false })}>
+                  Movies List
+                </MenuItem>
+            </Link>
           </Drawer>
         </div>
         <div>
