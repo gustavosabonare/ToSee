@@ -3,13 +3,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/actions'
-import {GridList, GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
-import {Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import {Card, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 const style = {
@@ -29,7 +27,12 @@ const style = {
 }
 
 class SearchPage extends Component {
-
+  constructor(props){
+    super(props);
+    this.state = {
+      open: false
+    }
+  }
   displayingFetchedMovies (){
     return this.props.listMovies.list !== undefined ? this.props.listMovies.list
     .map(movie =>
@@ -38,19 +41,6 @@ class SearchPage extends Component {
         </Card>)
     : null
   }
-
-  displayingPages(){
-    if (this.props.listMovies.list !== undefined){
-      var stepComponents = [];
-       for (var i=0; i<this.props.listMovies.pages; i++ )
-       {
-        stepComponents.push(<Step key={i}>
-          <StepLabel></StepLabel>
-        </Step>)
-       }
-     return stepComponents;
-  }
-}
 
   buttonConfigNext(){
     if(this.props.listMovies.pages !== undefined)
@@ -82,9 +72,20 @@ class SearchPage extends Component {
   render(){
     return(
       <div>
-        {console.log(this.props)}
         <div>
-          <AppBar title="Search Movies"/>
+          <AppBar title="Search Movies" onLeftIconButtonTouchTap={() => this.setState({ open: true })} />
+          <Drawer
+            docked={false}
+            open={this.state.open}
+            onRequestChange={(open) => this.setState({open})}>
+            <Link to='/'><MenuItem onTouchTap={() => {this.setState({ open: false }); this.props.resetComponent()}}>
+              Home
+            </MenuItem></Link>
+            <Link to='/list' ><MenuItem
+              onTouchTap={() => {this.setState({ open: false });this.props.resetComponent()}}>
+              Movies List
+            </MenuItem></Link>
+          </Drawer>
         </div>
         <div>
             {this.displayingFetchedMovies()}
