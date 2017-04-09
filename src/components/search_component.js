@@ -163,6 +163,7 @@ class SearchPage extends Component {
               default={true}/>
           </Link>
         </div>
+        <div>{console.log(this.props)}</div>
       </div>
     )
   }

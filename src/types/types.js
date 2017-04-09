@@ -1,4 +1,5 @@
 export const RESET_COMPONENT = 'RESET_COMPONENT';
 export const ADD_MOVIE = 'ADD_MOVIES';
 export const REMOVE_MOVIE = 'REMOVE_MOVIES';
-export const SEARCH_FETCH = 'SEARCH_FETCH;'
+export const SEARCH_FETCH = 'SEARCH_FETCH';
+export const GET_MOVIES_LIST = 'GET_MOVIES_LIST';

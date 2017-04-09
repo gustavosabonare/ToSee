@@ -5,7 +5,7 @@ const initialState = {}
 
 const app = (state = initialState, action) => reducerMatching(
   [types.RESET_COMPONENT, resetComponent],
-  [types.SEARCH_FETCH, searchFetch]
+  [types.SEARCH_FETCH, searchFetch],
 )(state,action)
 
 function resetComponent(state, action){
@@ -15,6 +15,5 @@ function resetComponent(state, action){
 function searchFetch(state, action){
   return {...state, list: action.lista, indexPage: action.indexPage === undefined ? 1 : action.indexPage , pages: action.pages}
 }
-
 
 export default app;
