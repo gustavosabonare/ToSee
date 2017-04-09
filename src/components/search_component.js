@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem'
+import MenuItem from 'material-ui/MenuItem';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -38,7 +39,8 @@ class SearchPage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      open: false
+      openDrawer: false,
+      openSnack: false
     }
   }
 
@@ -57,7 +59,13 @@ class SearchPage extends Component {
             <FlatButton
               label="Add to List"
               primary={true}
-              style={style.addToList}/>
+              style={style.addToList}
+              onTouchTap={() => {this.props.addToMoviesList(movie); this.setState({openSnack: true})}}/>
+            <Snackbar
+            open={this.state.openSnack}
+            message='Movie Added to List'
+            autoHideDuration={1000}
+            onRequestClose={() => this.setState({ openSnack: false})}/>
           </CardHeader>
           <CardMedia
             style={style.cardMedia}
@@ -107,22 +115,22 @@ class SearchPage extends Component {
         <div>
           <AppBar
             title="Search Movies"
-            onLeftIconButtonTouchTap={() => this.setState({ open: true })} />
+            onLeftIconButtonTouchTap={() => this.setState({ openDrawer: true })} />
           <Drawer
             docked={false}
-            open={this.state.open}
+            open={this.state.openDrawer}
             onRequestChange={(open) => this.setState({open})}>
             <Link
               to='/'>
               <MenuItem
-                onTouchTap={() => {this.setState({ open: false }); this.props.resetComponent()}}>
+                onTouchTap={() => {this.setState({ openDrawer: false }); this.props.resetComponent()}}>
                 Home
               </MenuItem>
             </Link>
             <Link
               to='/list'>
               <MenuItem
-                onTouchTap={() => {this.setState({ open: false });this.props.resetComponent()}}>
+                onTouchTap={() => {this.setState({ openDrawe: false });this.props.resetComponent()}}>
                 Movies List
               </MenuItem>
             </Link>
@@ -163,7 +171,6 @@ class SearchPage extends Component {
               default={true}/>
           </Link>
         </div>
-        <div>{console.log(this.props)}</div>
       </div>
     )
   }
@@ -176,7 +183,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({searchFetch: actions.searchFetch, resetComponent: actions.resetComponent}, dispatch)
+  return bindActionCreators({searchFetch: actions.searchFetch, resetComponent: actions.resetComponent, addToMoviesList: actions.addToMoviesList, removeFromMoviesList: actions.removeFromMoviesList}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
