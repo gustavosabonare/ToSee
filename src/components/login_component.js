@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Link} from 'react-router';
+//import {Link} from 'react-router';
 
 
 const styles = {
@@ -33,7 +33,7 @@ const styles = {
 
 class LoginScreen extends Component {
   constructor(props){
-    super(props),
+    super(props);
     this.state = {
       errorText: 'none'
       }
@@ -44,13 +44,13 @@ class LoginScreen extends Component {
       <div className="app" style={styles.Page}>
         <div style={styles.LoginBox}>
           <div>
-            <div style = {styles.TextField}>
+            <div style={styles.TextField}>
               <TextField
                 hintText='Email'
                 floatingLabelText='Email'
                 required={true}/>
             </div>
-            <div style = {styles.TextField}>
+            <div style={styles.TextField}>
               <TextField
                 hintText='Password'
                 floatingLabelText='Password'

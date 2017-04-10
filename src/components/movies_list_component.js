@@ -96,7 +96,7 @@ class MoviesList extends Component {
           <Drawer
             docked={false}
             open={this.state.openDrawer}
-            onRequestChange={(open) => this.setState({open})}>
+            onRequestChange={(openDrawer) => this.setState({openDrawer})}>
             <Link to='/home'>
               <MenuItem
                 onTouchTap={() => this.setState({ openDrawer: false })}>
