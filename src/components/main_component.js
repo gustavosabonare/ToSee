@@ -41,7 +41,7 @@ class App extends Component {
         <div>
           <div style={{textAlign: 'center'}}>
             <List>
-              <Link to="/"><ListItem primaryText={'Home'} /></Link>
+              <Link to="/home"><ListItem primaryText={'Home'} /></Link>
               <Link to="/search"><ListItem primaryText={'Search Movies'}/></Link>
               <Link to="/list"><ListItem primaryText={'Movies List'}/></Link>
             </List>

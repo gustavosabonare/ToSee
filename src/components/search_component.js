@@ -121,7 +121,7 @@ class SearchPage extends Component {
             open={this.state.openDrawer}
             onRequestChange={(open) => this.setState({open})}>
             <Link
-              to='/'>
+              to='/home'>
               <MenuItem
                 onTouchTap={() => {this.setState({ openDrawer: false }); this.props.resetComponent()}}>
                 Home
@@ -164,7 +164,7 @@ class SearchPage extends Component {
             style={style}
             onClick={() => {this.props.searchFetch(this.refs.searchText.getValue());window.scrollTo(0, 0)}}/>
           <Link
-            to="/" >
+            to="/home" >
             <RaisedButton
               onClick={() => this.props.resetComponent()}
               label="Back"

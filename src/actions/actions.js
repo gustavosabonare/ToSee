@@ -47,7 +47,7 @@ export function addToMoviesList(movie){
       if (!snap.child(movie.id).exists())
         child.child(movie.id).push({movie})
       else
-        null
+        return null
     })
 }
 
@@ -56,6 +56,6 @@ export function removeFromMoviesList(movie){
       if (snap.child(movie.id).exists())
         child.child(movie.id).remove()
       else
-        null
+        return null
     })
 }

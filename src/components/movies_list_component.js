@@ -97,7 +97,7 @@ class MoviesList extends Component {
             docked={false}
             open={this.state.openDrawer}
             onRequestChange={(open) => this.setState({open})}>
-            <Link to='/'>
+            <Link to='/home'>
               <MenuItem
                 onTouchTap={() => this.setState({ openDrawer: false })}>
                 Home
@@ -115,7 +115,7 @@ class MoviesList extends Component {
             {this.displayingToSeeMovies()}
         </div>
         <div  style={{textAlign: 'center'}}>
-          <Link to="/"><RaisedButton label="Back" default={true} style={style}/></Link>
+          <Link to="/home"><RaisedButton label="Back" default={true} style={style}/></Link>
         </div>
       </div>
     )
