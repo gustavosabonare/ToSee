@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import SearchReducer from './reducer_search';
-import ToSeeReducer from './reducer_tosee';
+import ListReducer from './reducer_list';
 
 const allReducers = combineReducers({
   searchList: SearchReducer,
-  toseeList: ToSeeReducer
+  toSeeList: ListReducer
 });
 
 export default allReducers

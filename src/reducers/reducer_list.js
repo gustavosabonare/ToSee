@@ -1,7 +1,9 @@
 import reducerMatching from 'reducer-matching';
 import * as types from '../types/types';
 
-const initialState = {}
+const initialState = {
+  list: undefined,
+}
 
 const app = (state = initialState, action) => reducerMatching(
   [types.GET_MOVIES_LIST, getMoviesList]
