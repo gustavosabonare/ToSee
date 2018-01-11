@@ -1,49 +1,52 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
-import {List, ListItem} from 'material-ui/List';
+import { Link } from 'react-router';
+import { List, ListItem } from 'material-ui/List';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem'
+import MenuItem from 'material-ui/MenuItem';
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      open: false
-    }
+      open: false,
+    };
   }
 
   render() {
     return (
       <div>
         <div>
-          <AppBar 
-            title="Welcome" 
-            onLeftIconButtonTouchTap={() => this.setState({ open: true })} 
+          <AppBar
+            title="Welcome"
+            onLeftIconButtonTouchTap={() => this.setState({ open: true })}
           />
           <Drawer
             docked={false}
             open={this.state.open}
-            onRequestChange={(open) => this.setState({open})}>
+            onRequestChange={open => this.setState({ open })}
+          >
             <Link
-              to='/search'>
+              to="/search"
+            >
               <MenuItem onTouchTap={() => this.setState({ open: false })}>
                 Search Movies
               </MenuItem>
             </Link>
             <Link
-              to='/list' >
-              <MenuItem onTouchTap={() =>this.setState({ open: false })}>
+              to="/list"
+            >
+              <MenuItem onTouchTap={() => this.setState({ open: false })}>
                 Movies List
               </MenuItem>
             </Link>
           </Drawer>
         </div>
         <div>
-          <div style={{textAlign: 'center'}}>
+          <div style={{ textAlign: 'center' }}>
             <List>
-              <Link to="/search"><ListItem primaryText={'Search Movies'}/></Link>
-              <Link to="/list"><ListItem primaryText={'Movies List'}/></Link>
+              <Link to="/search"><ListItem primaryText={'Search Movies'} /></Link>
+              <Link to="/list"><ListItem primaryText={'Movies List'} /></Link>
             </List>
           </div>
         </div>
