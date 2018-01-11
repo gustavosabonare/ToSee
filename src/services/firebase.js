@@ -11,4 +11,4 @@ const config = {
 
   firebase.initializeApp(config);
 
-  export default firebase;
+  export const moviesListChild = firebase.database().ref().child('movieslist');
