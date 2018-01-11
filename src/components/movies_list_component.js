@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as actions from '../actions/actions'
 import {Link} from 'react-router';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton'
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
-import {Card, CardHeader, CardMedia, CardText,} from 'material-ui/Card';
-import Snackbar from 'material-ui/Snackbar';
+
+import {
+  AppBar, 
+  Drawer, 
+  RaisedButton, 
+  MenuItem, 
+  FlatButton, 
+  Card, 
+  CardHeader, 
+  CardMedia, 
+  CardText, 
+  Snackbar
+} from 'material-ui';
+
+// Actions
+import * as listActions from '../actions/listActions'
 
 const style = {
   margin: 12,
@@ -44,11 +53,14 @@ class MoviesList extends Component {
   }
 
   componentWillMount(){
-    this.props.getMoviesList();
+    if (!this.props.listMovies.list) {
+      this.props.actions.getMoviesList();
+    }
   }
 
   displayingToSeeMovies (){
     return this.props.listMovies.list !== undefined ? this.props.listMovies.list
+
     .map(movie =>
         <Card
           key={movie.id}
@@ -63,12 +75,7 @@ class MoviesList extends Component {
               label="Remove from List"
               primary={true}
               style={style.removeFromList}
-              onTouchTap={() => {this.props.removeFromMoviesList(movie); this.setState({openSnack: true})}}/>
-              <Snackbar
-              open={this.state.openSnack}
-              message='Movie Removed to List'
-              autoHideDuration={1000}
-              onRequestClose={() => this.setState({ openSnack: false})}/>
+              onTouchTap={() => {this.props.actions.removeFromMoviesList(movie); this.setState({openSnack: true})}}/>
           </CardHeader>
           <CardMedia
             style={style.cardMedia}
@@ -115,21 +122,28 @@ class MoviesList extends Component {
             {this.displayingToSeeMovies()}
         </div>
         <div  style={{textAlign: 'center'}}>
-          <Link to="/home"><RaisedButton label="Back" default={true} style={style}/></Link>
+          <RaisedButton 
+            onClick={() => browserHistory.goBack()}
+            label="Back" 
+            default={true} 
+            style={style}/>
         </div>
+        <Snackbar
+              open={this.state.openSnack}
+              message='Movie Removed to List'
+              autoHideDuration={1000}
+              onRequestClose={() => this.setState({ openSnack: false})}/>
       </div>
     )
   }
 }
 
-function mapStateToProps(state){
-  return {
-    listMovies: state.toseeList
-  }
-}
+const mapStateToProps = state => ({
+  listMovies: state.toSeeList,
+});
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators({removeFromMoviesList: actions.removeFromMoviesList, getMoviesList: actions.getMoviesList}, dispatch)
-}
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(listActions, dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoviesList);

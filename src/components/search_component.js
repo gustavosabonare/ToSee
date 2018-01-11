@@ -1,16 +1,25 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
+import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import Snackbar from 'material-ui/Snackbar';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import * as actions from '../actions/actions'
-import {Card, CardHeader, CardMedia, CardText,} from 'material-ui/Card';
+
+import {
+  AppBar,
+  Drawer, 
+  MenuItem, 
+  Snackbar, 
+  TextField, 
+  RaisedButton, 
+  FlatButton, 
+  Card,
+  CardHeader, 
+  CardMedia, 
+  CardText
+} from 'material-ui';
+
+// Actions
+import * as searchActions from '../actions/searchActions'
 
 const style = {
   margin: 12,
@@ -44,8 +53,12 @@ class SearchPage extends Component {
     }
   }
 
+  onComponentWillUnmount() {
+    this.props.actions.resetComponent();
+  }
+
   displayingFetchedMovies (){
-    return this.props.listMovies.list !== undefined ? this.props.listMovies.list
+    return this.props.searchList.list !== undefined ? this.props.searchList.list
     .map(movie =>
         <Card
           key={movie.id}
@@ -60,7 +73,7 @@ class SearchPage extends Component {
               label="Add to List"
               primary={true}
               style={style.addToList}
-              onTouchTap={() => {this.props.addToMoviesList(movie); this.setState({openSnack: true})}}/>
+              onTouchTap={() => {this.props.actions.addToMoviesList(movie); this.setState({openSnack: true})}}/>
             <Snackbar
             open={this.state.openSnack}
             message='Movie Added to List'
@@ -86,27 +99,21 @@ class SearchPage extends Component {
   }
 
   buttonConfigNext(){
-    if(this.props.listMovies.pages !== undefined)
+    if(!this.props.searchList.pages !== 0)
     {
-      if (this.props.listMovies.indexPage >= this.props.listMovies.pages)
-          return true
-        else
-          return false
+      if (this.props.searchList.indexPage >= this.props.searchList.pages)
+        return true
     }
-    else
-      return true
+    return false
   }
 
   buttonConfigPrevious(){
-    if(this.props.listMovies.pages !== undefined)
+    if(!this.props.searchList.pages !== 0)
     {
-      if (this.props.listMovies.indexPage <= 1)
-          return true
-        else
-          return false
+      if (this.props.searchList.indexPage <= 1)
+        return true
     }
-    else
-      return true
+    return false
   }
 
   render(){
@@ -123,14 +130,14 @@ class SearchPage extends Component {
             <Link
               to='/home'>
               <MenuItem
-                onTouchTap={() => {this.setState({ openDrawer: false }); this.props.resetComponent()}}>
+                onTouchTap={() => {this.setState({ openDrawer: false });}}>
                 Home
               </MenuItem>
             </Link>
             <Link
               to='/list'>
               <MenuItem
-                onTouchTap={() => {this.setState({ openDrawe: false });this.props.resetComponent()}}>
+                onTouchTap={() => {this.setState({ openDrawe: false });this.props.actions.resetComponent()}}>
                 Movies List
               </MenuItem>
             </Link>
@@ -144,13 +151,13 @@ class SearchPage extends Component {
             <RaisedButton
               label="<"
               disabled={this.buttonConfigPrevious()}
-              onClick={() => {this.props.searchFetch(this.refs.searchText.getValue(),this.props.listMovies.indexPage-1);window.scrollTo(0, 0)}}
+              onClick={() => {this.props.actions.searchFetch(this.refs.searchText.getValue(),this.props.searchList.indexPage-1);window.scrollTo(0, 0)}}
               primary={true}
               style={style} />
             <RaisedButton
               label=">"
               disabled={this.buttonConfigNext()}
-              onClick={() => {this.props.searchFetch(this.refs.searchText.getValue(),this.props.listMovies.indexPage+1);window.scrollTo(0, 0)}}
+              onClick={() => {this.props.actions.searchFetch(this.refs.searchText.getValue(),this.props.searchList.indexPage+1);window.scrollTo(0, 0)}}
               primary={true}
               style={style} />
           </div>
@@ -162,28 +169,24 @@ class SearchPage extends Component {
             label="Search"
             primary={true}
             style={style}
-            onClick={() => {this.props.searchFetch(this.refs.searchText.getValue());window.scrollTo(0, 0)}}/>
-          <Link
-            to="/home" >
-            <RaisedButton
-              onClick={() => this.props.resetComponent()}
-              label="Back"
-              default={true}/>
-          </Link>
+            onClick={() => {this.props.actions.searchFetch(this.refs.searchText.getValue());window.scrollTo(0, 0)}}/>
+          <RaisedButton
+            onClick={() => browserHistory.goBack()}
+            label="Back"
+            default={true}
+            />
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps(state){
-  return {
-    listMovies: state.searchList
-  }
-}
+const mapStateToProps = state => ({
+  searchList: state.searchList
+});
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators({searchFetch: actions.searchFetch, resetComponent: actions.resetComponent, addToMoviesList: actions.addToMoviesList, removeFromMoviesList: actions.removeFromMoviesList}, dispatch)
-}
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(searchActions, dispatch),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
