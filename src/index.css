@@ -1,5 +1,64 @@
-body {
+html, body, #root {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-}
+  height: 100%; }
+
+.app {
+  background-image: url(../public/background.png); }
+
+.link, .home-scene__link {
+  text-decoration: none; }
+
+.home-scene__menu {
+  text-align: center; }
+
+.list-scene {
+  display: flex;
+  flex-direction: column; }
+  .list-scene__movies-list {
+    width: 70%;
+    margin: auto; }
+  .list-scene__movie-card {
+    margin: auto;
+    clear: both;
+    overflow: hidden;
+    max-width: 800px; }
+  .list-scene__card-button {
+    float: right;
+    right: 50px;
+    margin-top: 5px !important; }
+  .list-scene__card-synopses {
+    padding-top: 0 !important; }
+  .list-scene__back-buttom {
+    margin: 12px;
+    align-self: center; }
+
+.search-scene {
+  display: flex;
+  flex-direction: column; }
+  .search-scene__movies-list {
+    width: 70%;
+    margin: auto; }
+  .search-scene__movie-card {
+    margin: auto;
+    clear: both;
+    overflow: hidden;
+    max-width: 800px; }
+  .search-scene__card-button {
+    float: right;
+    right: 50px;
+    margin-top: 5px !important; }
+  .search-scene__card-synopses {
+    padding-top: 0 !important; }
+  .search-scene__list-nav {
+    align-self: center; }
+  .search-scene__list-nav-button {
+    margin: 12px 12px 0 12px; }
+  .search-scene__form {
+    align-self: center; }
+  .search-scene__input {
+    margin-right: 10px; }
+  .search-scene__back-button {
+    margin: 12px;
+    align-self: center; }

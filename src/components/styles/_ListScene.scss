@@ -1,0 +1,31 @@
+.list-scene {
+    display: flex;
+    flex-direction: column;
+
+    &__movies-list { 
+       width: 70%;
+       margin: auto;
+    }
+
+    &__movie-card {
+        margin: auto;
+        clear: both;
+        overflow: hidden;
+        max-width: 800px,
+    }
+
+    &__card-button {
+        float: right;
+        right: 50px;
+        margin-top: 5px !important;
+    }
+
+    &__card-synopses {
+        padding-top: 0 !important;
+    }
+
+    &__back-buttom {
+        margin: 12px;
+        align-self: center;
+    }
+}

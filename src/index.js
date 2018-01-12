@@ -11,6 +11,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import allReducers from './reducers';
 import Routes from './routes/routes';
 
+import './index.css';
+
 
 injectTapEventPlugin();
 

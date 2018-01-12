@@ -1,0 +1,47 @@
+.search-scene {
+    display: flex;
+    flex-direction: column;
+
+    &__movies-list { 
+       width: 70%;
+       margin: auto;
+    }
+
+    &__movie-card {
+        margin: auto;
+        clear: both;
+        overflow: hidden;
+        max-width: 800px,
+    }
+
+    &__card-button {
+        float: right;
+        right: 50px;
+        margin-top: 5px !important;
+    }
+
+    &__card-synopses {
+        padding-top: 0 !important;
+    }
+
+    &__list-nav {
+        align-self: center;
+    }
+
+    &__list-nav-button {
+        margin: 12px 12px 0 12px;
+    }
+
+    &__form {
+        align-self: center;
+    }
+
+    &__input {
+        margin-right: 10px;
+    }
+
+    &__back-button {
+        margin: 12px;
+        align-self: center;
+    }
+}

@@ -31,7 +31,7 @@ const styles = {
   },
 };
 
-class LoginScreen extends Component {
+class LoginScene extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,4 +81,4 @@ class LoginScreen extends Component {
   }
 }
 
-export default LoginScreen;
+export default LoginScene;

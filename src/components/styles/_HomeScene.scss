@@ -1,0 +1,10 @@
+.home-scene {
+
+    &__menu {
+        text-align: center;
+    }
+
+    &__link {
+        @extend .link;
+    }
+}

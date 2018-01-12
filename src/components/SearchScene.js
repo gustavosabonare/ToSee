@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import {
   AppBar,
-  Drawer,
-  MenuItem,
   Snackbar,
   TextField,
   RaisedButton,
@@ -20,39 +18,18 @@ import {
 // Actions
 import * as searchActions from '../actions/searchActions';
 
-const style = {
-  margin: 12,
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  card: {
-    margin: 'auto',
-    clear: 'both',
-    overflow: 'hidden',
-    maxWidth: '800px',
-  },
-  cardText: {
-    paddingTop: 0,
-  },
-  addToList: {
-    float: 'right',
-    right: 50,
-    marginTop: 5,
-  },
-};
-
-class SearchPage extends Component {
+class SearchScene extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      openDrawer: false,
       openSnack: false,
     };
+
+    this.submitSearch = this.submitSearch.bind(this);
   }
 
-  onComponentWillUnmount() {
+  componentWillUnmount() {
     this.props.actions.resetComponent();
   }
 
@@ -60,20 +37,19 @@ class SearchPage extends Component {
     return this.props.searchList.list !== undefined ? this.props.searchList.list
     .map(movie =>
       (<Card
+        className="search-scene__movie-card"
         key={movie.id}
-        style={style.card}
       >
         <CardHeader
           avatar={movie.poster_path !== null ? `https://image.tmdb.org/t/p/w92${movie.poster_path}` : 'http://www.auro-3d.com/wp-content/uploads/2016/08/no-poster-available.jpg'}
-          titleStyle={style.cardHeader}
           showExpandableButton
           title={movie.original_title}
           subtitle={movie.release_date !== '' ? movie.release_date.split('-', 1) : 'Date unavailable'}
         >
           <FlatButton
+            className="search-scene__card-button"
             label="Add to List"
             primary
-            style={style.addToList}
             onTouchTap={() => {
               this.props.actions.addToMoviesList(movie);
               this.setState({ openSnack: true });
@@ -87,14 +63,10 @@ class SearchPage extends Component {
           />
         </CardHeader>
         <CardMedia
-          style={style.cardMedia}
           expandable
           overlay={
-            <CardText
-              style={style.cardText}
-              expandable
-            >
-              <h3 style={style.h3}>Synopses:</h3>
+            <CardText expandable>
+              <h3>Synopses:</h3>
               {movie.overview}
             </CardText>}
         >
@@ -123,92 +95,73 @@ class SearchPage extends Component {
     return false;
   }
 
+  submitSearch(e) {
+    e.preventDefault();
+    this.props.actions.searchFetch(this.refs.searchText.getValue());
+  }
+
   render() {
     return (
-      <div>
-        <div>
-          <AppBar
-            title="Search Movies"
-            onLeftIconButtonTouchTap={() => this.setState({ openDrawer: true })}
-          />
-          <Drawer
-            docked={false}
-            open={this.state.openDrawer}
-            onRequestChange={openDrawer => this.setState({ openDrawer })}
-          >
-            <Link
-              to="/home"
-            >
-              <MenuItem
-                onTouchTap={() => { this.setState({ openDrawer: false }); }}
-              >
-                Home
-              </MenuItem>
-            </Link>
-            <Link
-              to="/list"
-            >
-              <MenuItem
-                onTouchTap={() => {
-                  this.setState({ openDrawe: false });
-                  this.props.actions.resetComponent();
-                }}
-              >
-                Movies List
-              </MenuItem>
-            </Link>
-          </Drawer>
-        </div>
-        <div style={{ width: '70%', margin: 'auto' }}>
+      <div className="search-scene">
+        <AppBar iconStyleLeft={{ display: 'none' }} title="Search Movies" />
+        <div className="search-scene__movies-list">
           {this.displayingFetchedMovies()}
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <div>
-            <RaisedButton
-              label="<"
-              disabled={this.buttonConfigPrevious()}
-              onClick={() => {
-                this.props.actions.searchFetch(
+        <div className="search-scene__list-nav">
+          <RaisedButton
+            className="search-scene__list-nav-button"
+            label="<"
+            disabled={this.buttonConfigPrevious()}
+            onClick={() => {
+              this.props.actions.searchFetch(
                   this.refs.searchText.getValue(), this.props.searchList.indexPage - 1,
                 );
-                window.scrollTo(0, 0);
-              }}
-              primary
-              style={style}
-            />
-            <RaisedButton
-              label=">"
-              disabled={this.buttonConfigNext()}
-              onClick={() => {
-                this.props.actions.searchFetch(
+              window.scrollTo(0, 0);
+            }}
+            primary
+          />
+          <RaisedButton
+            className="search-scene__list-nav-button"
+            label=">"
+            disabled={this.buttonConfigNext()}
+            onClick={() => {
+              this.props.actions.searchFetch(
                   this.refs.searchText.getValue(), this.props.searchList.indexPage + 1,
                 );
-                window.scrollTo(0, 0);
-              }}
-              primary
-              style={style}
-            />
-          </div>
+              window.scrollTo(0, 0);
+            }}
+            primary
+          />
+        </div>
+        <form
+          className="search-scene__form"
+          onSubmit={this.submitSearch}
+        >
           <TextField
+            className="search-scene__input"
             floatingLabelText="Movie Name"
             ref="searchText"
             hintText="Movie Name"
           />
           <RaisedButton
+            className="search-scene__search-button"
             label="Search"
             primary
-            style={style}
-            onClick={() => {
-              this.props.actions.searchFetch(this.refs.searchText.getValue());
-              window.scrollTo(0, 0);
-            }}
+            ref="search"
+            onClick={() => { this.searchButton.click(); }}
           />
-          <RaisedButton
-            onClick={() => browserHistory.goBack()}
-            label="Back"
-            default
+
+          <button
+            style={{ display: 'none' }}
+            ref={(refs) => { this.searchButton = refs; }}
           />
-        </div>
+        </form>
+        <RaisedButton
+          className="search-scene__back-button"
+          onClick={() => browserHistory.goBack()}
+          label="Back"
+          default
+        />
       </div>
     );
   }
@@ -222,4 +175,4 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(searchActions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchScene);
