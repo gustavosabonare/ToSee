@@ -13,7 +13,6 @@ import Routes from './routes/routes';
 
 import './index.css';
 
-
 injectTapEventPlugin();
 
 const store = createStore(allReducers,

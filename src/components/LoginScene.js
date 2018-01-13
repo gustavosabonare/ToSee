@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { browserHistory } from 'react-router';
+import firebase from 'firebase';
 // import {Link} from 'react-router';
 
 
@@ -35,20 +37,33 @@ class LoginScene extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
+      password: '',
       errorText: 'none',
     };
+
+    this.Login = this.Login.bind(this);
+  }
+
+  Login(e) {
+    e.preventDefault();
+    this.loginButton.click();
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => browserHistory.push('/home'))
+      .catch(() => this.setState({ errorText: true }));
   }
 
   render() {
     return (
       <div className="app" style={styles.Page}>
         <div style={styles.LoginBox}>
-          <div>
+          <form onSubmit={this.Login}>
             <div style={styles.TextField}>
               <TextField
                 hintText="Email"
                 floatingLabelText="Email"
                 required
+                onChange={e => this.setState({ email: e.target.value })}
               />
             </div>
             <div style={styles.TextField}>
@@ -57,6 +72,7 @@ class LoginScene extends Component {
                 floatingLabelText="Password"
                 required
                 type="password"
+                onChange={e => this.setState({ password: e.target.value })}
               />
             </div>
             <div style={styles.Buttom}>
@@ -64,8 +80,10 @@ class LoginScene extends Component {
               <RaisedButton
                 label="Login"
                 primary
-                onClick={() => this.setState({ errorText: '' })}
+                onClick={() => this.loginButton.click()}
               />
+
+              <button style={{ display: 'none' }} ref={(ref) => { this.loginButton = ref; }} />
             </div>
             <div>
               <p
@@ -74,7 +92,7 @@ class LoginScene extends Component {
                 Login Failed
               </p>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     );
